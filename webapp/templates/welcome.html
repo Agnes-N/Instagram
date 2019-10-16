@@ -3,5 +3,24 @@
 {% block content %}
 {{block.super}}
 <h1 class='text-center'>Welcome to Instagram web application</h1>
-{% endblock %}
 
+<div class="container">
+    <div class="container">
+        <!-- Looping through news   -->
+        {% for images in all_images %}
+
+        <div class="row">
+            <!-- displaying all_images -->
+            <div class="col-md-6">
+                <img src="{{images.profile_pic.url}}" class="img-responsive" alt="Image" style="width: 300px; height: 200px; margin-top: 5%">
+                <h5> {{images.image_caption}} </h5>
+                <h5> {{ images.date }} </h5>
+            </div>
+        </div>
+        {% empty %}
+        <div class="row">
+            <h2 class="text-center">There No images</h2>
+        </div>
+        {% endfor %}
+</div>
+{% endblock %}
