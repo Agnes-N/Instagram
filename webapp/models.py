@@ -40,7 +40,7 @@ class Profile(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     @classmethod
-    def get_all_users(cls):
+    def get_all_instagram_users(cls):
         instagram_users = cls.objects.all()
         return instagram_users
 

@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="container">
-        <!-- Looping through news   -->
+        <!-- Looping through images   -->
         {% for images in all_images %}
 
         <div class="row">
@@ -22,5 +22,26 @@
             <h2 class="text-center">There No images</h2>
         </div>
         {% endfor %}
+
+          <!-- Looping through users   -->
+          {% for user in insta_users %}
+
+          <div class="row">
+              <!-- displaying all_images -->
+              <div class="col-md-6">
+                  <img src="{{user.profile_photo.url}}" class="img-responsive" alt="Image" style="width: 300px; height: 200px; margin-top: 5%">
+                  <h5> {{user.firstname}} </h5>
+                  <h5> {{user.lastname}} </h5>
+                  <h5>{% autoescape on %} 
+                      {{user.bio| safe}} 
+                      {% endautoescape %}</h5>
+                  <h5> {{ user.date }} </h5>
+              </div>
+          </div>
+          {% empty %}
+          <div class="row">
+              <h2 class="text-center">There No images</h2>
+          </div>
+          {% endfor %}
 </div>
 {% endblock %}
