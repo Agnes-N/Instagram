@@ -5,6 +5,8 @@ from . import views
 
 urlpatterns=[
     url('^$',views.welcome,name = 'welcome'),
+    
+    # url(r'^tinymce/', include('tinymce.urls')),
 ]
 
 if settings.DEBUG:

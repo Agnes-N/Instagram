@@ -1,4 +1,5 @@
 from django.db import models
+from tinymce.models import HTMLField
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -35,8 +36,13 @@ class Profile(models.Model):
     lastname = models.CharField(max_length =30)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     profile_photo = models.ImageField(upload_to = 'profile_photos/', null=True)
-    bio = models.CharField(max_length =300)
+    bio = HTMLField()
     date = models.DateTimeField(auto_now_add=True)
+
+    @classmethod
+    def get_all_users(cls):
+        instagram_users = cls.objects.all()
+        return instagram_users
 
     def save_profile(self):
         self.save()
@@ -50,4 +56,4 @@ class Profile(models.Model):
 
 
 def __str__(self):
-        return self.firstname
+        return self.user
