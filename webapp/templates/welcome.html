@@ -3,16 +3,15 @@
 {% block content %}
 {{block.super}}
 
-<div class="container">
-    <div class="container">
-        {% for images in all_images %}
-        <div class="card" style="width: 30rem;margin-top: 10%">
-                <h5> {{ images.user }} </h5>
-                <img src="{{images.image.url}}" class="img-responsive" alt="Image" style="margin-top: 5%">
-            <div class="card-body">
-                <h5> {{images.image_caption}} </h5>
-            </div>
+<div class="container" >
+    {% for images in all_images %}
+    <div class="card" style="width: 40rem; margin-top: 6%; margin-left: 20%; ">
+            <h5> {{ images.user }} </h5>
+            <img src="{{images.image.url}}" height="400" class="img-responsive" alt="Image">
+        <div class="card-body">
+            <h5> {{images.image_caption}} </h5>
         </div>
-        {% endfor %}
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}
