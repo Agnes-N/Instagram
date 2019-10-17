@@ -9,7 +9,6 @@
 <nav class="navbar navbar-expand-lg navbar-white bg-white static-top" style="background-color: white">
   <div class="container">
 
-    <!-- <div class="row"> -->
       <div class="home">
           <a class="navbar-brand" href="{%url 'welcome'%}">
               <img src="../static/phootos/instagram.png" width="50" height="50" style="border-right: 1px solid black;">
@@ -29,26 +28,27 @@
 
           <ul class="nav justify-content-end">
               <li class="nav-item">
-                  <a class="nav-link" href="" style="color: black">Profile</a>
+                  <a class="nav-link" href="{%url 'profile'%}" style="color: black">Profile</a>
               </li>
 
               <li class="nav-item">
                 <a class="nav-link" href="{%url 'upload'%}" style="color: black">upload</a>
             </li>
-                <!-- {% if user.is_authenticated %} -->
+                {% if user.is_authenticated %}
                 <div class="dropdown" style="margin-top: 4%">
                     <a class="down" data-toggle="dropdown">Acount</a>
                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="" style="color: black">View my account</a>
                       <a class="dropdown-item" href="/accounts/password/change" style="color: black">Change Password</a>
                       <a class="dropdown-item" href="/logout" style="color: black">Logout</a>                    
                     </div>
                   </div>            
-              <!-- {% else %} -->
+              {% else %}
               <li class="nav-item">
                   <a class="nav-link" href="/accounts/login" style="color: black">Login</a>
               </li>
             </ul>
-          <!-- {% endif %} -->
+          {% endif %}
         </div>
         
     </div>

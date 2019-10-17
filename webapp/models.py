@@ -10,7 +10,9 @@ class Image(models.Model):
     '''
     image_caption = models.CharField(max_length =30)
     image_name = models.CharField(max_length =30,null=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     profile_pic = models.ImageField(upload_to = 'profile_pics/', null=True)
+    image = models.ImageField(upload_to = 'uploads/', null=True)
     date = models.DateTimeField(auto_now_add=True)
 
     @classmethod
@@ -29,7 +31,7 @@ class Image(models.Model):
         cls.objects.filter(id = id).update(profile_pic = new_profile_pic)
 
     def __str__(self):
-        return self.image_caption
+        return self.image_name
 
 class Profile(models.Model):
     firstname = models.CharField(max_length =30)
