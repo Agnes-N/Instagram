@@ -1,10 +1,10 @@
 from django import forms
-from .models import Profile
+from .models import Image
 
 class NewProfileForm(forms.ModelForm):
     class Meta:
-        model = Profile
-        exclude = ['user', 'date']
+        model = Image
+        exclude = ['image_name', 'date']
         # widgets = {
         #     'tags': forms.CheckboxSelectMultiple(),
         # }
