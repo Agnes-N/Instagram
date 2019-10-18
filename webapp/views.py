@@ -9,7 +9,9 @@ from .forms import NewProfileForm,NewImageForm
 def welcome(request):
     all_images = Image.get_all_images()
     insta_users = Profile.get_all_instagram_users()
-    return render(request, 'welcome.html', {"all_images":all_images, "insta_users":insta_users})
+    current_user = request.user
+    myprof = Profile.objects.filter(id = current_user.id).first()
+    return render(request, 'welcome.html', {"all_images":all_images, "insta_users":insta_users, "myprof":myprof})
 
 
 @login_required(login_url='/accounts/login/')
@@ -31,10 +33,12 @@ def new_profile(request):
    
 @login_required(login_url='/accounts/login/')
 def my_profile(request):
-    all_images = Image.get_all_images()
+
     current_user = request.user
+    profi_images = Image.objects.filter(user = current_user)
     my_profile = Profile.objects.filter(user = current_user).first()
-    return render(request, 'profile.html', {"all_images":all_images, "my_profile":my_profile})
+    return render(request, 'profile.html', {"profi_images":profi_images, "my_profile":my_profile})
+
 
 @login_required(login_url='/accounts/login/')
 def new_image(request):
