@@ -13,7 +13,7 @@ class Image(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     image = models.ImageField(upload_to = 'uploads/', null=True)
     date = models.DateTimeField(auto_now_add=True)
-    image_likes = models.ManyToManyField('Profile', default = False, null = True, related_name="likes")
+    # image_likes = models.ManyToManyField('Profile', default = False, null = True, related_name="likes")
 
     @classmethod
     def get_all_images(cls):
@@ -39,7 +39,7 @@ class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     profile_photo = models.ImageField(upload_to = 'profile_photos/', null=True)
     bio = HTMLField()
-    profile_avatar = models.ImageField(upload_to = 'profile_avatar/', null=True)
+    # profile_avatar = models.ImageField(upload_to = 'profile_avatar/', null=True)
     date = models.DateTimeField(auto_now_add=True)
 
     @classmethod

@@ -2,23 +2,41 @@
 
 {% block content %}
 {{block.super}}
+<style>
+    .avatar {
+        vertical-align: middle;
+        border-radius: 50%;
+    }
 
+    .theprofile {
+    float: left;
+    width: calc(33.333% - 1rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 3rem;
+}
+
+
+</style>
 <div class="container">
-    {% for user in all_images %}
-
-    <div class="card" style="width: 30rem;margin-top: 10%">
-    <img src="{{user.profile_photo.url}}" class="img-responsive" 
-        <div class="card-body">
-                <h5>{% autoescape on %} 
-                        {{user.bio| safe}} 
-                        {% endautoescape %}</h5>
-        </div>
-    
-    {% empty %}
-    <div class="row">
-        <h2 class="text-center">There No images</h2>
+<div class="theprofile">
+    <div class="profile" style="margin-top: -7%">
+            <img src="{{my_profile.profile_photo.url}}" class="img-responsive avatar">
     </div>
+    
+    <div class="imagecaption" >
+        <h5>{{my_profile.user}}</h5>
+            <h5>{% autoescape on %} 
+                    {{my_profile.bio| safe}} 
+                    {% endautoescape %}</h5>
+    </div>
+</div>
+    
 
+       
+    {% for user in all_images %}
+ 
     {% endfor %}
 </div>
 {% endblock %}

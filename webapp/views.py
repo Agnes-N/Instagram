@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http  import HttpResponse,Http404
-from .models import Image,Profile
+from .models import Image,Profile,Comments
 from django.contrib.auth.decorators import login_required
 from .forms import NewProfileForm,NewImageForm
 # Create your views here.
@@ -15,13 +15,14 @@ def welcome(request):
 @login_required(login_url='/accounts/login/')
 def new_profile(request):
     current_user = request.user
+    profile = Profile.objects.filter(id = current_user.id)
     if request.method == 'POST':
         form = NewProfileForm(request.POST, request.FILES)
         if form.is_valid():
             caption = form.save(commit=False)
             caption.user = current_user
             caption.save()
-        return redirect('profile')
+            return redirect('myprofile')
 
     else:
         form = NewProfileForm()
@@ -31,11 +32,13 @@ def new_profile(request):
 @login_required(login_url='/accounts/login/')
 def my_profile(request):
     all_images = Image.get_all_images()
-    my_profile = Profile.objects.all()
+    current_user = request.user
+    my_profile = Profile.objects.filter(user = current_user).first()
     return render(request, 'profile.html', {"all_images":all_images, "my_profile":my_profile})
 
 @login_required(login_url='/accounts/login/')
 def new_image(request):
+
     current_user = request.user
     if request.method == 'POST':
         form = NewImageForm(request.POST, request.FILES)
