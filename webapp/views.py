@@ -11,6 +11,7 @@ def welcome(request):
     insta_users = Profile.get_all_instagram_users()
     return render(request, 'welcome.html', {"all_images":all_images, "insta_users":insta_users})
 
+
 @login_required(login_url='/accounts/login/')
 def new_profile(request):
     current_user = request.user
@@ -20,11 +21,18 @@ def new_profile(request):
             caption = form.save(commit=False)
             caption.user = current_user
             caption.save()
-        return redirect('welcome')
+        return redirect('profile')
 
     else:
         form = NewProfileForm()
-    return render(request, 'upload.html', {"form": form})
+    return render(request, 'edit_profile.html', {"form": form})
+
+   
+@login_required(login_url='/accounts/login/')
+def my_profile(request):
+    all_images = Image.get_all_images()
+    my_profile = Profile.objects.all()
+    return render(request, 'profile.html', {"all_images":all_images, "my_profile":my_profile})
 
 @login_required(login_url='/accounts/login/')
 def new_image(request):
@@ -39,4 +47,4 @@ def new_image(request):
 
     else:
         form = NewImageForm()
-    return render(request, 'profile.html', {"form": form})
+    return render(request, 'upload.html', {"form": form})

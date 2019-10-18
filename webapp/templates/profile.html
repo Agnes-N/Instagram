@@ -1,36 +1,24 @@
-{% load bootstrap4 %} 
-{% load staticfiles %}
-<!DOCTYPE html>
-<html>
+{%extends 'base.html'%}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block content %}
+{{block.super}}
 
-  <title>Profile</title>
-  {{form.media}}
+<div class="container">
+    {% for user in all_images %}
 
-  {% block styles %} 
-  {% bootstrap_css %}
-  <link rel="stylesheet" href="{% static 'css/base.css' %}"> 
-  {% endblock %}
+    <div class="card" style="width: 30rem;margin-top: 10%">
+    <img src="{{user.profile_photo.url}}" class="img-responsive" 
+        <div class="card-body">
+                <h5>{% autoescape on %} 
+                        {{user.bio| safe}} 
+                        {% endautoescape %}</h5>
+        </div>
+    
+    {% empty %}
+    <div class="row">
+        <h2 class="text-center">There No images</h2>
+    </div>
 
-</head>
-
-<body>
-<div class="container" style="margin-top:5%">
-
-  <form  action="{%url 'upload' %}" method="post" enctype="multipart/form-data">
-    {%csrf_token%}
-
-    {% bootstrap_form form%}
-    <input type="submit" class="btn btn-success btn-lg" value="Post">
-  </form>
-
-   {% block scripts %}
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  {% bootstrap_javascript %} {% endblock %}
+    {% endfor %}
 </div>
-</body>
-
-</html>
+{% endblock %}

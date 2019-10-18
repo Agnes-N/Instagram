@@ -6,9 +6,8 @@ from . import views
 urlpatterns=[
     url('^$',views.welcome,name = 'welcome'),
     url(r'^new/upload$', views.new_image, name='upload'),
-    url(r'^new/profile$', views.new_profile, name='profile'),
-  
-    # url(r'^tinymce/', include('tinymce.urls')),
+    url(r'^new/profile$', views.new_profile, name='edit'),
+    url(r'^myprofile$', views.my_profile, name='myprofile'),
 ]
 
 if settings.DEBUG:

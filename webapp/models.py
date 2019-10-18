@@ -11,9 +11,9 @@ class Image(models.Model):
     image_caption = models.CharField(max_length =30)
     image_name = models.CharField(max_length =30,null=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
-    profile_pic = models.ImageField(upload_to = 'profile_pics/', null=True)
     image = models.ImageField(upload_to = 'uploads/', null=True)
     date = models.DateTimeField(auto_now_add=True)
+    image_likes = models.ManyToManyField('Profile', default = False, null = True, related_name="likes")
 
     @classmethod
     def get_all_images(cls):
@@ -31,7 +31,7 @@ class Image(models.Model):
         cls.objects.filter(id = id).update(profile_pic = new_profile_pic)
 
     def __str__(self):
-        return self.image_name
+        return self.image_caption
 
 class Profile(models.Model):
     firstname = models.CharField(max_length =30)
@@ -39,6 +39,7 @@ class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     profile_photo = models.ImageField(upload_to = 'profile_photos/', null=True)
     bio = HTMLField()
+    profile_avatar = models.ImageField(upload_to = 'profile_avatar/', null=True)
     date = models.DateTimeField(auto_now_add=True)
 
     @classmethod
@@ -56,6 +57,5 @@ class Profile(models.Model):
     def update_profile(cls,id,value):
         cls.objects.filter(id = id).update(user_id = new_user)
 
-
 def __str__(self):
-        return self.user
+        return self.firstname
