@@ -15,13 +15,17 @@
             {% for images in all_images %}
 
             <div class="card" style="width: 35rem; margin-top: 6%; margin-left: 20%; ">  
-                    {% if user%}
+                    {% if myprof%}
                     <img src="{{myprof.profile_photo.url}}" class="img-responsive profile_image"><span>{{ images.user }}</span>
-                            {% endif %}
+                    {% endif %}
             <img src="{{images.image.url}}" height="400" class="img-responsive" alt="Image">
         <div class="card-body">
             <h5> {{images.image_caption}} </h5>
             <h5> <small>{{images.date|timesince}}</small> </h5>
+            <a href="{%url 'comment'%}" class="btn btn-default">Comment</a>
+            {% if comment%}
+            <p>{{ comment.comment_image }}</p>
+            {% endif %}
         </div>
     </div>
     {% endfor %}

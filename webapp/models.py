@@ -30,7 +30,7 @@ class Profile(models.Model):
 def __str__(self):
         return self.firstname
 
-        
+
 class Image(models.Model):
     '''
     a class for Image model
@@ -64,8 +64,8 @@ class Image(models.Model):
 
 class Comments(models.Model):
     comment_image = models.CharField(max_length = 250)
-    person = models.ForeignKey('Profile', related_name = 'commenter', on_delete=models.CASCADE)
-    commented_image = models.ForeignKey('Image', on_delete=models.CASCADE)
+    person = models.ForeignKey('Profile', on_delete=models.CASCADE, null = True)
+    commented_image = models.ForeignKey('Image', on_delete=models.CASCADE, null = True)
 
 def __str__(self):
         return self.person
