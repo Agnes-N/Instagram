@@ -59,3 +59,11 @@ class Profile(models.Model):
 
 def __str__(self):
         return self.firstname
+
+class Comments(models.Model):
+    comment_image = models.CharField(max_length = 250)
+    person = models.ForeignKey('Profile', related_name = 'commenter', on_delete=models.CASCADE)
+    commented_image = models.ForeignKey('Image', on_delete=models.CASCADE)
+
+def __str__(self):
+        return self.person
