@@ -87,6 +87,9 @@ class Comments(models.Model):
 
     def delete_comments(self):
         self.delete()
+    
+    def update_comment(self):
+        self.update()
 
 def __str__(self):
         return self.posted_by
