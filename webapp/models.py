@@ -26,6 +26,11 @@ class Profile(models.Model):
     def update_profile(cls,id,value):
         cls.objects.filter(id = id).update(user_id = new_user)
 
+    @classmethod
+    def search_by_profile(cls,username):
+        certain_user = cls.objects.filter(user_username_icontains = username)
+        return certain_user
+
 def __str__(self):
         return self.user
 

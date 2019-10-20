@@ -40,6 +40,17 @@ def my_profile(request):
     my_profile = Profile.objects.filter(user = current_user).first()
     return render(request, 'profile.html', {"profi_images":profi_images, "my_profile":my_profile})
 
+@login_required(login_url='/accounts/login/')
+def search_users(request):
+  if 'username' in request.GET and request.GET["username"]:
+      search_term = request.GET.get("username")
+      searched_users = Profile.search_by_profile(search_term)
+      message = f"{search_term}"
+      return render(request, "search.html",{"message":message,"users": searched_users})
+  else:
+      message = "You haven't searched for any term"
+      return render(request, 'search.html',{"message":message})
+
 
 @login_required(login_url='/accounts/login/')
 def upload_image(request):

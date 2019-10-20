@@ -18,11 +18,14 @@
               
             </a>
       </div>
-
-      <div class="search text-center" style="margin-top: 2%; margin-left:5%;">
+      <!-- <div class="search text-center" style="margin-top: 2%; margin-left:5%;">
           <input type="text" class="input-sm form-control" name="search-form"
           placeholder="Search">
-      </div>
+      </div> -->
+      <form action="{% url 'searchs'%}" class="search text-center" style="margin-top: 2%; margin-left:5%;">
+        <input type="text" class="input-sm form-control" name="search-form"
+        placeholder="Search">
+      </form>
 
       <div class="account">
 
