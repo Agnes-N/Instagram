@@ -1,6 +1,6 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http  import HttpResponse,Http404
-from .models import Image,Profile,Comments
+from .models import Image,Profile,Comments,Followers
 from django.contrib.auth.decorators import login_required
 from .forms import NewProfileForm,NewImageForm,commentForm
 # Create your views here.
@@ -11,7 +11,8 @@ def welcome(request):
     insta_users = Profile.get_all_instagram_users()
     current_user = request.user
     myprof = Profile.objects.filter(id = current_user.id).first()
-    return render(request, 'welcome.html', {"all_images":all_images, "insta_users":insta_users, "myprof":myprof})
+    mycomm = Comments.objects.filter(id = current_user.id).first()
+    return render(request, 'welcome.html', {"all_images":all_images, "insta_users":insta_users, "myprof":myprof, "mycomm":mycomm})
 
 
 @login_required(login_url='/accounts/login/')
@@ -57,27 +58,24 @@ def upload_image(request):
     return render(request, 'upload.html', {"form": form})
 
 @login_required(login_url='/accounts/login/')
-def add_comment(request):
+def add_comment(request, image_id):
     current_user = request.user
-    # comments = Image.objects.filter(id = current_user.id)
-    comments = Image.objects.filter(id = current_user.id)
+    image_item = Image.objects.filter(id = image_id).first()
+    profiless = Profile.objects.filter( user = current_user.id).first()
     if request.method == 'POST':
         form = commentForm(request.POST, request.FILES)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.user = current_user
-            comment.image = comments
+            comment.posted_by = profiless
+            comment.commented_image = image_item
             comment.save()
             return redirect('welcome')
 
     else:
         form = commentForm()
-    return render(request, 'comment_form.html', {"form": form})
+    return render(request, 'comment_form.html', {"form": form, "image_id": image_id})
 
-@login_required(login_url='/accounts/login/')
-def comment(request):
 
-    current_user = request.user
-    comment = Comment.objects.filter(user = current_user).all()
-    return render(request, 'welcome.html', {"comment":comment})
+def following(request):
+    followingss = Followers.objects.filter(user_from = request.user)
 

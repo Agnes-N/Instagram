@@ -6,7 +6,7 @@ class NewProfileForm(forms.ModelForm):
         model = Profile
         exclude = ['user', 'date', 'firstname', 'lastname']
         # widgets = {
-        #     'tags': forms.CheckboxSelectMultiple(),
+        #     'profile': forms.CheckboxSelectMultiple(),
         # }
 
 class NewImageForm(forms.ModelForm):
@@ -20,7 +20,7 @@ class NewImageForm(forms.ModelForm):
 class commentForm(forms.ModelForm):
     class Meta:
         model = Comments
-        exclude = ['commented_image', 'person','date','user']
+        exclude = ['commented_image', 'posted_by','profile']
         # widgets = {
-        #     'tags': forms.CheckboxSelectMultiple(),
+        #     'profile': forms.CheckboxSelectMultiple(),
         # }

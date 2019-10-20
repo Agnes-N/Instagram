@@ -11,24 +11,25 @@
     }
 </style>
 
-<div class="container" >         
-            {% for images in all_images %}
+<div class="container" >      
+    {% for images in all_images %}
 
-            <div class="card" style="width: 35rem; margin-top: 6%; margin-left: 20%; ">  
-                    {% if myprof%}
-                    <img src="{{myprof.profile_photo.url}}" class="img-responsive profile_image"><span>{{ images.user }}</span>
-                    {% endif %}
-            <img src="{{images.image.url}}" height="400" class="img-responsive" alt="Image">
-        <div class="card-body">
-            <h5> {{images.image_caption}} </h5>
-            <h5> <small>{{images.date|timesince}}</small> </h5>
-            <a href="{%url 'comment'%}" class="btn btn-default">Comment</a>
-            {% if comment%}
-            <p>{{ comment.comment_image }}</p>
+    <div class="card" style="width: 35rem; margin-top: 6%; margin-left: 20%; ">  
+            {% if myprof%}
+            <img src="{{myprof.profile_photo.url}}" class="img-responsive profile_image"><span>{{ images.user }}</span>
             {% endif %}
-        </div>
-    </div>
-    {% endfor %}
+    <img src="{{images.image.url}}" height="400" class="img-responsive" alt="Image">     
 
+    <div class="card-body">
+        <h5> {{images.image_caption}} </h5>
+        <h5> <small>{{images.date|timesince}}</small> </h5>
+     <hr>   
+        {% for comments in images.comments_set.all %}
+        <h5> {{comments.comment}} </h5>
+        {% endfor %}
+        <a href="{%url 'comment' images.id%}" class="btn btn-default">Comment</a>
+    </div>
+    </div>
+    {% endfor %}   
 </div>
 {% endblock %}

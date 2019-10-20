@@ -9,7 +9,6 @@ class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     profile_photo = models.ImageField(upload_to = 'profile_photos/', null=True)
     bio = HTMLField()
-    # profile_avatar = models.ImageField(upload_to = 'profile_avatar/', null=True)
     date = models.DateTimeField(auto_now_add=True)
 
     @classmethod
@@ -28,8 +27,7 @@ class Profile(models.Model):
         cls.objects.filter(id = id).update(user_id = new_user)
 
 def __str__(self):
-        return self.firstname
-
+        return self.user
 
 class Image(models.Model):
     '''
@@ -41,10 +39,12 @@ class Image(models.Model):
     image = models.ImageField(upload_to = 'uploads/', null=True)
     date = models.DateTimeField(auto_now_add=True)
     profile = models.ForeignKey(Profile,on_delete=models.CASCADE,null=True)
+    likes= models.IntegerField(default=0)
+    dislikes= models.IntegerField(default=0)
 
     @classmethod
     def get_all_images(cls):
-        images = cls.objects.all()
+        images = cls.objects.all().prefetch_related('comments_set')
         return images
 
     def save_image(self):
@@ -54,18 +54,47 @@ class Image(models.Model):
         self.delete()
 
     @classmethod
-    def update_image(cls,id,value):
-        cls.objects.filter(id = id).update(profile_pic = new_profile_pic)
+    def update_caption(cls,id,caption):
+        update_image = cls.objects.filter(id = id).update(image_caption = caption)
+        return update_image
 
     def __str__(self):
         return self.image_caption
 
+class Preference(models.Model):
+    '''
+    http://www.learningaboutelectronics.com/Articles/How-to-add-like-dislike-buttons-to-a-post-Python-Django.php
+    '''
+    user= models.ForeignKey(User)
+    post= models.ForeignKey(Image)
+    value= models.IntegerField()
+    date= models.DateTimeField(auto_now= True)
 
+    
+    def __str__(self):
+        return str(self.user) + ':' + str(self.post) +':' + str(self.value)
+
+    class Meta:
+       unique_together = ("user", "post", "value")
 
 class Comments(models.Model):
-    comment_image = models.CharField(max_length = 250)
-    person = models.ForeignKey('Profile', on_delete=models.CASCADE, null = True)
-    commented_image = models.ForeignKey('Image', on_delete=models.CASCADE, null = True)
+    comment = models.CharField(max_length = 250)
+    posted_by = models.ForeignKey(Profile, on_delete=models.CASCADE, null = True)
+    commented_image = models.ForeignKey(Image, on_delete=models.CASCADE, null = True)
+
+    def save_comments(self):
+        self.save()
+
+    def delete_comments(self):
+        self.delete()
 
 def __str__(self):
-        return self.person
+        return self.posted_by
+
+class Followers(models.Model):
+    '''
+    https://stackoverflow.com/questions/27587216/get-the-follower-count-in-django
+    '''    
+    from_user = models.ForeignKey(User, related_name='following_set', null = True)
+    to_user = models.ForeignKey(User, related_name='follower_set', null = True)
+
