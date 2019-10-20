@@ -12,18 +12,15 @@
       <div class="home">
           <a class="navbar-brand" href="{%url 'welcome'%}">
               <img src="../static/phootos/instagram.png" width="50" height="50" style="border-right: 1px solid black;">
-              <span style="font-family: 'Lobster', cursive; color: black; margin-left: 5%">
+              <span style="font-family: 'Lobster', cursive; color: black; margin-left: 5%; font-size: 120%">
                 Instagram
               </span>
               
             </a>
       </div>
-      <!-- <div class="search text-center" style="margin-top: 2%; margin-left:5%;">
-          <input type="text" class="input-sm form-control" name="search-form"
-          placeholder="Search">
-      </div> -->
+
       <form action="{% url 'searchs'%}" class="search text-center" style="margin-top: 2%; margin-left:5%;">
-        <input type="text" class="input-sm form-control" name="search-form"
+        <input type="text" class="input-sm form-control" name="username"
         placeholder="Search">
       </form>
 

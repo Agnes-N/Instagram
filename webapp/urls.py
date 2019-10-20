@@ -9,9 +9,8 @@ urlpatterns=[
     url(r'^new/profile$', views.add_profile, name='edit'),
     url(r'^myprofile$', views.my_profile, name='myprofile'),
     url(r'^comment/(\d+)/$', views.add_comment, name='comment'),
-    # url(r'^search/', views.search_results, name='search_results'),
     url(r'^search/',views.search_users, name = 'searchs')
-
+    
 ]
 
 if settings.DEBUG:
