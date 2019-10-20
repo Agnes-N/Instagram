@@ -26,3 +26,24 @@ class ProfileTestClass(TestCase):
     def test_update_method(self):
         self.profile.save_profile()
         new_profile = Profile.objects.filter(bio = 'cool').update(bio = 'kind')
+
+class CommentTestClass(TestCase):
+     # Setup method
+    def setUp(self):
+        self.comment = Comments.objects.create(comment = 'woooowww')
+        
+    # Testing Instance
+    def test_instance(self):
+        self.assertTrue(isinstance(self.comment,Comments))
+
+    # testing the save method
+    def test_save_method(self):
+        self.comment.save_comments()
+        comment = Comments.objects.all()
+        self.assertTrue(len(comment) > 0)
+        
+    def test_delete_method(self):
+        self.comment.save_comments()
+        self.comment.delete_comments()
+        comment = Comments.objects.all()
+        self.assertTrue(len(comment) >= 0)
