@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Profile,Comments
+from .models import Profile,Comments,Image
 from django.contrib.auth.models import User
 
 # Create your tests here.
@@ -47,3 +47,32 @@ class CommentTestClass(TestCase):
         self.comment.delete_comments()
         comment = Comments.objects.all()
         self.assertTrue(len(comment) >= 0)
+
+class ImageTestClass(TestCase):
+    
+    # Setup method
+    def setUp(self):
+        self.image = Image(image = 'dog2.jpg', image_name='test',image_caption='This is a test image',date = '12.9.2019')
+        
+        
+    def tearDown(self):
+        Image.objects.all().delete()
+        Profile.objects.all().delete()
+
+    # Testing Instance
+    def test_instance(self):
+        self.assertTrue(isinstance(self.image,Image))
+        
+    # testing the save method
+    def test_save_method(self):
+        self.image = Image(image = 'dog2.jpg', image_name='test',image_caption='This is a test image',date = '12.9.2019')
+        self.image.save_image()
+        images = Image.objects.all()
+        self.assertTrue(len(images) >= 1)
+        
+    def test_delete_method(self):
+        self.image = Image(image = 'dog2.jpg', image_name='test',image_caption='This is a test image',date = '12.9.2019')
+        self.image.save_image()
+        images = self.image.delete_image()
+        deleted = Image.objects.all()
+        self.assertTrue(len(deleted) <= 0)
