@@ -16,16 +16,21 @@
 
     <div class="card" style="width: 35rem; margin-top: 6%; margin-left: 20%; ">  
             {% if myprof%}
-            <span style="margin-bottom: 3%"><img src="{{myprof.profile_photo.url}}" class="img-responsive profile_image"><strong>{{ images.user }}</strong></span>
+            <span style="margin-bottom: 3%"><img src="{{myprof.profile_photo.url}}" class="img-responsive profile_image" style="margin-right: 5%">
+                <strong><a href="{% url 'othersprofile' images.user.id %}">{{ images.user }}</a></strong></span>
             {% endif %}
-    <img src="{{images.image.url}}" height="400" class="img-responsive" alt="Image">     
+    <img src="{{images.image.url}}" height="400" class="img-responsive" alt="Image">   
+    <a href="{% url 'like' images.id%}"><img src="https://cdn2.iconfinder.com/data/icons/instagram-ui/48/jee-68-512.png" style="margin-bottom:-2%; margin-right:100%"  width=40></a>
+        <p><strong>{{images.likes}} likes</strong></p>
+        <!-- <i class="fa fa-heart"></i>
+        <i class='far fa-comment' style='font-size:24px'></i>   -->
 
     <div class="card-body">
         <h5> {{images.image_caption}} </h5>
         <h5> <small>{{images.date|timesince}}</small> </h5>
      <hr>   
         {% for comments in images.comments_set.all %}
-        <h5> {{comments.comment}} </h5>
+       <span><p><strong style="margin-right: 2%">{{ my_profile.user }}</strong>{{comments.comment}}</p></span>
         {% endfor %}
         <a href="{%url 'comment' images.id%}" class="btn btn-default">Comment</a>
     </div>

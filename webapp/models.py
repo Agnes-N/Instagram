@@ -83,9 +83,7 @@ def __str__(self):
         return self.posted_by
 
 class Followers(models.Model):
-    '''
-    https://stackoverflow.com/questions/27587216/get-the-follower-count-in-django
-    '''    
-    from_user = models.ForeignKey(User, related_name='following_set', null = True)
-    to_user = models.ForeignKey(User, related_name='follower_set', null = True)
+    
+    from_user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null = True)
 

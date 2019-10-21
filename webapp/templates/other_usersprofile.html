@@ -21,25 +21,22 @@
 </style>
 <div class="container">
 <div class="row">
-    <div class="col-md-1">
-        <div class="profile" style="margin-top: -7%">
-                <img src="{{my_profile.profile_photo.url}}" class="img-responsive avatar">
-        </div>
-    </div>
-    <div class="col-md-11">
-    <div class="imagecaption" style="margin-left: 15%">
-            <h5>{{my_profile.user}}</h5>
-                <h5>{% autoescape on %} 
-                        {{my_profile.bio| safe}} 
-                        {% endautoescape %}</h5>
-        </div>
+    <div class="profile" style="margin-top: -7%">
+            <img src="{{my_profiless.profile_photo.url}}" class="img-responsive avatar">
     </div>
     
+    <div class="imagecaption" style="margin-left: 15%">
+        <h5>{{my_profiless.user}}</h5>
+            <h5>{% autoescape on %} 
+                    {{my_profiless.bio| safe}} 
+                    {% endautoescape %}</h5>
+            <a href="{%url 'follow' my_profiless.id %}" class="btn btn-default">follow</a>
+    </div>
 </div>
 <hr>
 
     <div class="row" style="margin-top: 3%; margin-left: 3%;margin-right:3%">
-    {% for user in profi_images %}
+    {% for user in profiless_images %}
         <div class="col-md-4" style="margin-right:3%">   
         <img src="{{user.image.url}}" height="300" height="200" class="img-responsive" alt="Image">
         </div>

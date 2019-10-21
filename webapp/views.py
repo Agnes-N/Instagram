@@ -3,6 +3,7 @@ from django.http  import HttpResponse,Http404
 from .models import Image,Profile,Comments,Followers
 from django.contrib.auth.decorators import login_required
 from .forms import NewProfileForm,NewImageForm,commentForm
+from django.contrib.auth.models import User
 # Create your views here.
 
 @login_required(login_url='/accounts/login/')
@@ -87,7 +88,28 @@ def add_comment(request, image_id):
     return render(request, 'comment_form.html', {"form": form, "image_id": image_id})
 
 
-def following(request):
-    followingss = Followers.objects.filter(user_from = request.user).count
-    followers = Followers.objects.filter(to_user = request.user)
+def likes(request,id):
+   likes=1
+   image = Image.objects.get(id=id)
+   image.likes = image.likes+1
+   image.save()
+   return redirect("/")
+
+@login_required(login_url='/accounts/login/')
+def others_profile(request, ima_id):
+
+    current_user = User.objects.filter(id = ima_id).first()
+    profiless_images = Image.objects.filter(user = current_user)
+    my_profiless = Profile.objects.filter(user = current_user).first()
+    return render(request, 'other_usersprofile.html', {"profiless_images":profiless_images, "my_profiless":my_profiless})
+
+@login_required(login_url='/accounts/login/')
+def following(request, profile_id):
+    current_user = request.user
+    
+    profile_user = Profile.objects.filter(id = profile_id).first()
+    followers = Followers(from_user = current_user,profile = profile_user)
+    followers.save()
+    return redirect('othersprofile', profile_id)
+
 
