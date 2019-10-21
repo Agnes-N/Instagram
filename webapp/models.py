@@ -31,7 +31,7 @@ class Profile(models.Model):
         certain_user = cls.objects.filter(user__username__icontains = username)
         return certain_user
 
-def __str__(self):
+    def __str__(self):
         return self.user
 
 class Image(models.Model):

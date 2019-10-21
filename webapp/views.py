@@ -57,11 +57,13 @@ def search_users(request):
 def upload_image(request):
 
     current_user = request.user
+    user_images = Profile.objects.filter(user = current_user).first()
     if request.method == 'POST':
         form = NewImageForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.save(commit=False)
             image.user = current_user
+            image.profile = user_images
             image.save()
         return redirect('welcome')
 
