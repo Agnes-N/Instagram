@@ -88,5 +88,6 @@ def add_comment(request, image_id):
 
 
 def following(request):
-    followingss = Followers.objects.filter(user_from = request.user)
+    followingss = Followers.objects.filter(user_from = request.user).count
+    followers = Followers.objects.filter(to_user = request.user)
 
