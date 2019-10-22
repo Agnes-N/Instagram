@@ -79,7 +79,7 @@ class Comments(models.Model):
     def update_comment(self):
         self.update()
 
-def __str__(self):
+    def __str__(self):
         return self.posted_by
 
 class Followers(models.Model):
@@ -87,3 +87,5 @@ class Followers(models.Model):
     from_user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null = True)
 
+    def __str__(self):
+        return str(self.from_user)

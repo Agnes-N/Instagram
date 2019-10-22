@@ -91,7 +91,7 @@ def add_comment(request, image_id):
 
 
 def likes(request,id):
-   likes=1
+   likes=0
    image = Image.objects.get(id=id)
    image.likes = image.likes+1
    image.save()
@@ -108,7 +108,6 @@ def others_profile(request, ima_id):
 @login_required(login_url='/accounts/login/')
 def following(request, profile_id):
     current_user = request.user
-    
     profile_user = Profile.objects.filter(id = profile_id).first()
     followers = Followers(from_user = current_user,profile = profile_user)
     followers.save()
